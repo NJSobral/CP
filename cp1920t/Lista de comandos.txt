@@ -1,0 +1,42 @@
+  818  cabal install lhs2tex
+  819  sudo apt install cabal-install
+  820  cd cp1920t/
+  821  ghci cp1920t.lhs
+  822  cabal install QuickCheck gloss
+  823  cabal update
+  824  cabal QuickCheck
+  825  cabal install quickCheck
+  826  cabal install gloss
+  827  cabal install random
+  828  ghci cp1920t.lhs
+  829  cabal install graphics
+  830  cabal update
+  831  cabal install gloss
+  832  cabal install Gloss
+  833  ghci cp1920t.lhs
+  834  clear
+  835  cabal install quickCheck gloss
+  836  cabal install --allow-newer=base
+  837  cabal install --allow-newer=base gloss
+  838  gloss
+  839  cabal install gloss
+  840  sudo apt-get install freeglut3 freeglut3-dev
+  841  cabal install gloss
+  842  ghci cp1920t.lhs
+  843  lhs2TeX cp1920t.lhs > cp1920t.tex
+  844  cabal install lhs2tex
+  845  lhs2TeX cp1920t.lhs > cp1920t.tex
+  846  lhs2TeX cp1920t.lhs > cp1920t.tex
+  847  sudo apt install lhs2tex
+  848  sudo apt-get update
+  849  sudo apt install lhs2tex
+  850  lhs2TeX cp1920t.lhs > cp1920t.tex
+  851  pdflatex cp1920t
+  852  cabal install matrix
+  853  lhs2TeX cp1920t.lhs > cp1920t.tex
+  854  pdflatex cp1920t
+  855  cabal install xymatrix
+  856  sudo apt install xymatrix
+  857  sudo apt-get install texlive-full
+  858  lhs2TeX cp1920t.lhs > cp1920t.tex
+  859  pdflatex cp1920t

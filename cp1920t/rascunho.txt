@@ -1,0 +1,237 @@
+type Dict = Exp String String
+
+Dict = Exp A [Exp v o]
+
+dic_imp:: [(String,[String])]→Dict
+dic_imp=Term""·map(bmap id singl)·untar·discollect
+
+discollect :: [(String,[String])] -> [(String,String)]
+collect :: [(String, String)] -> [(String, [String])]
+
+dic_norm :: [(String,[String])] -> [(String,[String])]
+dic_norm =  collect . filter p . discollect 
+
+[(String,[String])] -> discollect -> [(String,String)]-> filter p -> collect -> [(String,[String])]
+
+p (a,b) = a > "" e b > ""
+
+
+
+
+
+
+Problema 5
+
+o sequence é um bocado ineficiente
+pq simplesmente troca um funtor por um monade (kinda)
+usa-se antes um mapM
+aplica uma função trocando dps o funtor e o monado
+mas ya tb depende da forma como se pensa
+@vaavaav mas todas as monads sao functors
+@reise sim mas nem todos os funtores sao monades
+e é o que acontece no caso de listas e IOs
+ambos sao funtores
+mas apenas IOs sao monades
+
+> Qual o vetor (ou de que forma tens de transladar) que terás de passar a cada imagem para ficar no sítio correto?
+-> Como transladar uma IO Picture? 
+-> Como fazer Pictures de um [IO Picture]
+
+Permuta entre truchet 1 e truchet 2
+
+
+
+_________________________ Problema 1 função Tar _________________________________
+
+
+[Term 'A' [Term 'B' [Term 'A' [Var "BRIM",Term 'L' [Term 'O' [Var "SHOCK"]]]]]]
+
+Em que as funções \textit{g1} e \textit{g2} que compõem o gene \textit{g} são obtidas, por:
+
+
+\begin{eqnarray*}
+\start
+        | tar = cataExp g |
+\just\equiv{ Definição de cataExp g}
+        | tar = g . recExp (cataExp tar) . outExp |
+\just\equiv{ isomorfismo inExp/outExp, Definição de recExp }
+        | tar . inExp = g . (id + (id >< map tar))|
+\just\equiv{ Definição de inExp , g = [g1,g2] e  absorção- + (22) }
+        | tar . (either Var (uncurry Term)) = either (g1 . id) (g2 . (id >< map tar))|
+\just\equiv{ Fusão- + (20) e natural-id (1)}
+        | either (tar . Var) (tar . uncurry Term) = either (g1) (g2 . (id >< map tar))|
+\just\equiv{ Eq- + (27) }
+        |lcbr (tar . Var = g1) (tar . uncurry Term = g2 . (id >< map tar))|
+\just\equiv{ Igualdade Extensional (69) }
+        |lcbr (tar . Var a = g1 a) (tar . uncurry Term (a,b) = (g2 . (id >< map tar)) (a,b))|
+\just\equiv{ Uncurry (82), Def-comp (70), Def-x (75), Def-id (71)}
+        |lcbr (tar . Var a = g1 a) (tar . Term a b = g2 . (a , map tar b))|
+\just\equiv{ Uncurry (82), Def-comp (70), Def-x (75), Def-id (71)}
+        |lcbr (tar . Var a = g1 a) (tar . Term a b = qq a ++ map tar b)|
+\end{eqnarray*}
+
+dic_exp :: Dict -> [(String,[String])]
+dicexp = collect . tar
+
+k a= (ccat a) >< id
+
+tar = cataExp g 
+  where g = either (singl . (split nil id)) ((uncurry fmap).(k >< concat))
+        k a= (ccat a) >< id
+
+tar = cataExp g 
+  where g = either (f) ((uncurry fmap).(k >< concat))
+        f x = [([],x)]
+
+j::[String] -> Dict -> [String]
+j [] (Var v) = [v]
+j  (Var v) = []
+j [] (Term o l) = []
+j (h:t) (Term o l)| o==h = (concat . map (j t)) l
+                  | otherwise = []
+
+h::[String] -> Maybe [String]
+h [] = Nothing
+h a = Just a 
+
+s::String -> [String]
+s a = "" : map singl a
+
+dic_rd :: String -> Dict -> Maybe [String]
+dic_rd = curry (h .uncurry (j . s))
+
+
+_________________________
+
+getTrad :: Eq a => a -> [(a,b)] -> Maybe b
+getTrad k = cataList (either nothing aux)
+        where nothing = const Nothing
+              aux((a,b),r)
+                      | a == k    = Just b
+                      | otherwise = r
+
+
+
+dic_rd :: Dict -> p -> [String]
+dic_rd Var a p = Var a
+dic_rd c@(Term a b) p = let t = look p (tar c)
+                           in t ++ aux 
+                where aux = look p (tar c) : dic_rd c p              
+
+
+
+
+
+_________________________
+dic_in
+
+
+
+__________________________________________________________________________
+
+
+_________________________________ Problema 2 isOrd _________________________
+
+Problema 2 
+
+
+insOrd
+
+
+_________________________
+isOrd
+
+isEmpty :: BTree a -> Bool
+isEmpty Empty = True
+isEmpty _ = False
+
+mint :: Ord a => BTree a -> a
+mint (Node tl x tr) = min x (min y z)
+where y = if isEmpty tl then x else mint tl
+z = if isEmpty tr then x else mint tr
+
+maxt :: Ord a => BST a -> a -- alterar
+maxt (Node tl x tr) = min x (min y z)
+where y = if isEmpty tl then x else mint tl
+z = if isEmpty tr then x else mint tr
+
+--isOrd :: Ord a => BST a -> Bool
+isOrd Empty = True
+isOrd (Node (x,(tl,tr))) = isOrd tl && isOrd tr &&
+                           (isEmpty tl || maxt tl < x) &&
+                           (isEmpty tr || x < mint tr)
+
+_________________________
+
+rrot 
+
+       raiz       ->   
+        / \            
+       /   \
+      aux   5
+      / \
+     /   \
+     4   aux2 
+
+        aux       ->   
+        / \            
+       /   \
+      4   raiz
+          /  \
+        aux2  5
+
+rrot Empty = Empty
+rrot (Node(a,(l@(Node(a(ll,lr))),r))) = (Node(l(ll,(Node(a(lr,r))))))
+
+
+lrot 
+
+
+        raiz       ->   
+        / \            
+       /   \
+      4   aux
+          /  \
+        aux2  5
+
+
+       aux      
+        / \            
+       /   \
+      raiz   5
+      / \
+     /   \
+     4   aux2 
+
+lrot Empty = Empty
+lrot (Node(a,(l,(Node(r,(rl,rr)))))) = (Node(r,((Node(a,(l,lr),rr)))))
+
+_________________________
+
+splay :: [Bool] -> (BTree a -> Btree a)
+
+
+True -> vai pela esquerda
+False -> vai pela direita
+
+
+__________________________________________________________________________
+
+Problema 3 
+
+bdt1 = Query("chuva na ida",(Dec "P",Query("Chuva no regresso",(Dec "P", Dec "N P"))))
+
+__________________________________________________________________________
+
+Problema 4
+
+anita =  Query("2a-feira",(Query("Chuva no ida",(Dec "P", Query("Chuva no regresso",(Dec "P", Dec "N P")))),Dec "N P"))
+
+bTb1 = (Node(True, (Empty,Empty)))
+btb2 = (Node(True, (Node(True,(Empty,Empty)),Empty)))
+btb3 = (Node(False, (Empty,Empty)))
+
+__________________________________________________________________________
+
+Problema  5
+

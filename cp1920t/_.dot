@@ -1,0 +1,33 @@
+digraph G {
+    /* edge [label=0]; */
+    graph [ranksep=0.5];
+    0 [shape=record, label="{{2}}"];
+    12 [shape=record, label="{{0}}"];
+    14 [shape=record, label="{{Empty}}"];
+    13 [shape=record, label="{{Empty}}"];
+    1 [shape=record, label="{{4}}"];
+    9 [shape=record, label="{{3}}"];
+    11 [shape=record, label="{{Empty}}"];
+    10 [shape=record, label="{{Empty}}"];
+    2 [shape=record, label="{{6}}"];
+    6 [shape=record, label="{{5}}"];
+    8 [shape=record, label="{{Empty}}"];
+    7 [shape=record, label="{{Empty}}"];
+    3 [shape=record, label="{{8}}"];
+    5 [shape=record, label="{{Empty}}"];
+    4 [shape=record, label="{{Empty}}"];
+    12 -> 14;
+    12 -> 13;
+    9 -> 11;
+    9 -> 10;
+    6 -> 8;
+    6 -> 7;
+    3 -> 5;
+    3 -> 4;
+    2 -> 6;
+    2 -> 3;
+    1 -> 9;
+    1 -> 2;
+    0 -> 12;
+    0 -> 1;
+}
